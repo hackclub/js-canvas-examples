@@ -366,5 +366,37 @@ function draw() {
 // SCALE distorts image, these transformations are better to do with vectors
 
 
+// lines
 
+let angles = [45, 135];
+const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
+ctx.strokeStyle = "black";
+for (let i = 0; i < 10; i += 1) {
+  for (let j = 0; j < 10; j += 1) {
+    ctx.save();
+    ctx.beginPath();
+    ctx.translate(j * 20+83, i * 20+47);
+    ctx.rotate(pick(angles)/180*Math.PI)
+    let d = 20*Math.sqrt(2);
+    ctx.moveTo(0, d/2);
+    ctx.lineTo(0, -d/2);
+    ctx.lineWidth = 1;
+    ctx.stroke();
+    ctx.restore();
+  }
+}
+
+// hover
+
+const circle = new Path2D();
+circle.arc(150, 75, 50, 0, 2 * Math.PI);
+ctx.fillStyle = 'red';
+ctx.fill(circle);
+
+canvas.addEventListener('mousemove', function(event) {
+  ctx.fillStyle = ctx.isPointInPath(circle, event.offsetX, event.offsetY) ? "green" : "red";
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.fill(circle);
+});
 
